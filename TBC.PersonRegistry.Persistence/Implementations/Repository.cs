@@ -1,0 +1,46 @@
+﻿using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
+using TBC.PersonRegistry.Application.Interfaces.Repositories;
+
+namespace TBC.PersonRegistry.Persistence.Implementations;
+
+public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity : class
+{
+
+    protected readonly DataContext context;
+    public Repository(DataContext context) => this.context = context;
+
+    public virtual Task Create(TEntity entity)
+    {
+        context.Set<TEntity>().Add(entity);
+        return Task.CompletedTask;
+    }
+    public virtual Task Update(TEntity entity)
+    {
+        context.Set<TEntity>().Update(entity);
+        return Task.CompletedTask;
+    }
+    public virtual Task Delete(int id)
+    {
+        var entity = context.Set<TEntity>().Find(id);
+        if (entity != null)
+        {
+            context.Set<TEntity>().Remove(entity);
+        }
+        return Task.CompletedTask;
+    }
+    public virtual async Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken = default)
+    {
+        return await context.Set<TEntity>().ToListAsync();
+    }
+
+    public virtual async Task<TEntity> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+    {
+        return await context.Set<TEntity>().FindAsync(id);
+    }
+    public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> where, CancellationToken cancellationToken = default)
+    {
+        return await context.Set<TEntity>().AnyAsync(where, cancellationToken);
+    }
+}
+
