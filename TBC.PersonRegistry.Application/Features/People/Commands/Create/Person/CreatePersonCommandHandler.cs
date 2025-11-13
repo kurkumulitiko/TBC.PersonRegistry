@@ -32,7 +32,7 @@ namespace TBC.PersonRegistry.Application.Features.People.Commands.Create.Person
                 phone.CreatedAt = DateTime.Now;
             
 
-            await _uow.PersonRepository.Create(person);
+            await _uow.PersonRepository.CreateAsync(person);
             await _uow.SaveAsync(cancellationToken);
 
             return person.Id;

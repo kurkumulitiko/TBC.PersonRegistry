@@ -25,7 +25,7 @@ public class UploadPersonImageCommandHandler : IRequestHandler<UploadPersonImage
         if (request.Image != null)
             personfromDb.ImagePath = await _fileService.UploadFileAsync(request.Image.OpenReadStream(), request.Image.FileName);
 
-        await _uow.PersonRepository.Update(personfromDb);
+         _uow.PersonRepository.Update(personfromDb);
         await _uow.SaveAsync();
 
     }

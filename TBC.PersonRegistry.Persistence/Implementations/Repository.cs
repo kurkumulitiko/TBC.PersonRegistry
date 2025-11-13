@@ -10,24 +10,41 @@ public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity :
     protected readonly DataContext context;
     public Repository(DataContext context) => this.context = context;
 
-    public virtual Task Create(TEntity entity)
+    //public virtual Task Create(TEntity entity)
+    //{
+    //    context.Set<TEntity>().Add(entity);
+    //    return Task.CompletedTask;
+    //}
+    //public virtual async Task CreateAsync(TEntity entity, CancellationToken cancellationToken = default)
+    //{
+    //    await context.Set<TEntity>().AddAsync(entity, cancellationToken);
+    //}
+    public void Create(TEntity entity)
     {
-        context.Set<TEntity>().Add(entity);
-        return Task.CompletedTask;
+        context.Add(entity);
     }
-    public virtual Task Update(TEntity entity)
+
+    public async Task CreateAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
-        context.Set<TEntity>().Update(entity);
-        return Task.CompletedTask;
+        await context.AddAsync(entity, cancellationToken);
     }
-    public virtual Task Delete(int id)
+
+    //public virtual Task Update(TEntity entity)
+    //{
+    //    context.Set<TEntity>().Update(entity);
+    //    return Task.CompletedTask;
+    //}
+    public virtual void Update(TEntity entity)
+    {
+        context.Update(entity);
+    }
+    public virtual void Delete(int id)
     {
         var entity = context.Set<TEntity>().Find(id);
         if (entity != null)
-        {
             context.Set<TEntity>().Remove(entity);
-        }
-        return Task.CompletedTask;
+
+        //return Task.CompletedTask;
     }
     public virtual async Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken = default)
     {

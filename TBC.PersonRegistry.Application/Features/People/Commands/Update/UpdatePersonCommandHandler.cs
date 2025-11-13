@@ -44,7 +44,7 @@ public class UpdatePersonCommandHandler : IRequestHandler<UpdatePersonCommand>
             });
         }
 
-        await _uow.PersonRepository.Update(personfromDb); 
+         _uow.PersonRepository.Update(personfromDb); 
         await _uow.SaveAsync(cancellationToken);
 
     }

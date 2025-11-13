@@ -25,7 +25,7 @@ public class DeletePersonCommandHandler : IRequestHandler<DeletePersonCommand>
         foreach (var item in personFromDb.RelatedPeople)
             item.DeletedAt = DateTime.Now;
         
-        await _uow.PersonRepository.Update(personFromDb);
+        _uow.PersonRepository.Update(personFromDb);
         await _uow.SaveAsync();
 
     }
