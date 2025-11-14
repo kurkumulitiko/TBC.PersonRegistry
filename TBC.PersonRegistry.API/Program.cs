@@ -23,13 +23,12 @@ builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
-//app.MigrateDatabase(); 
+app.MigrateDatabase(); 
 
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-   // app.MapOpenApi();
     app.UseSwaggerMiddleware();
 }
 app.UseMiddleware<LocalizationMiddleware>();
