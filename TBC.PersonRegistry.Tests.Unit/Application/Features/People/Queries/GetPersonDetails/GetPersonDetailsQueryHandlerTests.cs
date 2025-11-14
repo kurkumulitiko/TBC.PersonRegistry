@@ -7,7 +7,7 @@ using TBC.PersonRegistry.Application.Interfaces;
 using TBC.PersonRegistry.Application.Interfaces.Repositories;
 using TBC.PersonRegistry.Domain.Models;
 
-namespace TBC.PersonRegistry.Application.Tests
+namespace TBC.PersonRegistry.Tests.Unit.Application.Features.People.Queries.GetPersonDetails
 {
     public class GetPersonDetailsQueryHandlerTests
     {
@@ -28,7 +28,7 @@ namespace TBC.PersonRegistry.Application.Tests
 
         // TEST 1: Person not found
         [Fact]
-        public async Task Handle_ShouldThrow_NotFoundException_WhenPersonDoesNotExist()
+        public async Task Handle_WhenPersonDoesNotExist_ShouldThrow_NotFoundException()
         {
             // Arrange
             var query = new GetPersonDetailsQuery { Id = 99 };
@@ -48,7 +48,7 @@ namespace TBC.PersonRegistry.Application.Tests
 
         // TEST 2: Person found
         [Fact]
-        public async Task Handle_ShouldReturn_PersonDto_WhenPersonExists()
+        public async Task Handle_WhenPersonExists_ShouldReturn_PersonDto()
         {
             // Arrange
             var fakePerson = new Person
