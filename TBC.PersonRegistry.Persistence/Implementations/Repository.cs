@@ -31,12 +31,12 @@ public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity :
     }
     public virtual async Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken = default)
     {
-        return await context.Set<TEntity>().ToListAsync();
+        return await context.Set<TEntity>().ToListAsync(cancellationToken);
     }
 
     public virtual async Task<TEntity?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
     {
-        return await context.Set<TEntity>().FindAsync(id);
+        return await context.Set<TEntity>().FindAsync(id, cancellationToken);
     }
     public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> where, CancellationToken cancellationToken = default)
     {
