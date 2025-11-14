@@ -23,7 +23,7 @@ builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
-app.MigrateDatabase(); 
+//app.MigrateDatabase(); 
 
 
 // Configure the HTTP request pipeline.
