@@ -18,7 +18,7 @@ public static class IQueryableExtensions
             p.PrivateNumber.Contains(search));
     }
 
-    public static IQueryable<Person> ApplyFilterParameters(this IQueryable<Person> source, PersonFilter personFilter)
+    public static IQueryable<Person> ApplyFilterParameters(this IQueryable<Person> source, PersonFilter? personFilter)
     {
         if (personFilter == null)
             return source;

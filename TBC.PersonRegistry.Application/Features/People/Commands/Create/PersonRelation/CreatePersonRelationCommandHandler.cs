@@ -22,8 +22,8 @@ public class CreatePersonRelationCommandHandler : IRequestHandler<CreatePersonRe
         var personRelation = request.Adapt<Domain.Models.PersonRelation>();
         personRelation.CreatedAt = DateTime.Now;
 
-        await _uow.PersonRepository.AddRelatedPerson(personRelation);
-        await _uow.SaveAsync();
+        await _uow.PersonRepository.AddRelatedPerson(personRelation).ConfigureAwait(false);
+        await _uow.SaveAsync().ConfigureAwait(false); 
 
     }
 }

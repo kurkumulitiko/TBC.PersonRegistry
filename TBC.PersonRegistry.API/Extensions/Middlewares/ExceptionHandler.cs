@@ -38,11 +38,11 @@ public class ExceptionHandler
     {
         try
         {
-            await next(context);
+            await next(context).ConfigureAwait(false);
         }
         catch (Exception ex)
         {
-            await Handler(context, ex);
+            await Handler(context, ex).ConfigureAwait(false);
         }
     }
     private async Task Handler(HttpContext context, Exception exception)
@@ -101,7 +101,7 @@ public class ExceptionHandler
                 Formatting = Formatting.Indented
             });
 
-        await context.Response.WriteAsync(json);
+        await context.Response.WriteAsync(json).ConfigureAwait(false);
 
     }
 }

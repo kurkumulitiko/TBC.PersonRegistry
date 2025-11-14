@@ -6,8 +6,8 @@ namespace TBC.PersonRegistry.Persistence.Implementations;
 
 public class UnitOfWork : IUnitOfWork
 {
-    private ICityRepository cityRepository;
-    private IPersonRepository personRepository;
+    private ICityRepository? cityRepository;
+    private IPersonRepository? personRepository;
 
     private DataContext context;
     public UnitOfWork(DataContext context) => this.context = context;
@@ -17,7 +17,7 @@ public class UnitOfWork : IUnitOfWork
 
     public async Task<int> SaveAsync(CancellationToken cancellationToken = default)
     {
-        return await context.SaveChangesAsync(cancellationToken);
+        return await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
     }
 }
 

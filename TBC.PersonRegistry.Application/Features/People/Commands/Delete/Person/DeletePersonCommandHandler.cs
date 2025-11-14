@@ -14,7 +14,7 @@ public class DeletePersonCommandHandler : IRequestHandler<DeletePersonCommand>
 
     public async Task Handle(DeletePersonCommand request, CancellationToken cancellationToken)
     {
-        var personFromDb = await _uow.PersonRepository.GetPersonByIdAsync(request.Id, cancellationToken);
+        var personFromDb = await _uow.PersonRepository.GetPersonByIdAsync(request.Id, cancellationToken).ConfigureAwait(false); ;
         if (personFromDb == null)
             throw new NotFoundException("პიროვნება ვერ მოიძებნა!");
 
@@ -26,7 +26,7 @@ public class DeletePersonCommandHandler : IRequestHandler<DeletePersonCommand>
             item.DeletedAt = DateTime.Now;
         
         _uow.PersonRepository.Update(personFromDb);
-        await _uow.SaveAsync();
+        await _uow.SaveAsync().ConfigureAwait(false); 
 
     }
 }

@@ -15,7 +15,7 @@ internal static class EfCoreExtensions
 
         var items = await source.Skip((pageIndex - 1) * pageSize)
                                 .Take(pageSize)
-                                .ToListAsync(cancellationToken);
+                                .ToListAsync(cancellationToken).ConfigureAwait(false);
 
         return new Pagination<TEntity>(items, totalCount, pageIndex, pageSize);
     }

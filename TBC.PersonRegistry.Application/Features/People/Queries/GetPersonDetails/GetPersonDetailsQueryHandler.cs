@@ -17,7 +17,7 @@ public class GetPersonDetailsQueryHandler : IRequestHandler<GetPersonDetailsQuer
 
     public async Task<GetPersonDTO> Handle(GetPersonDetailsQuery request, CancellationToken cancellationToken)
     {
-        var person = await _uow.PersonRepository.GetPersonByIdAsync(request.Id, cancellationToken);
+        var person = await _uow.PersonRepository.GetPersonByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
         if (person == null)
             throw new NotFoundException($"მოცემული Id-ით {request.Id} პიროვნება ვერ მოიძებნა");
 

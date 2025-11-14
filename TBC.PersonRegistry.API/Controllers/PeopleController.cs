@@ -28,7 +28,6 @@ namespace TBC.PersonRegistry.API.Controllers
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="mapper"></param>
         public PeopleController(IMediator mediator) => this.mediator = mediator;
 
 
@@ -36,11 +35,12 @@ namespace TBC.PersonRegistry.API.Controllers
         ///  Creates a new person
         /// </summary>
         /// <param name="request"></param>
+        /// <param name="cancellationToken"></param> 
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Create([FromBody] CreatePersonCommand request, CancellationToken cancellationToken)
+        public async Task<ActionResult> Create([FromBody] CreatePersonCommand request, CancellationToken cancellationToken = default)
         {
-            var result = await mediator.Send(request, cancellationToken).ConfigureAwait(false); ;
+            var result = await mediator.Send(request, cancellationToken).ConfigureAwait(false); 
             return CreatedAtRoute("GetPersonById", new { id = result }, result);
         }
 
@@ -49,6 +49,7 @@ namespace TBC.PersonRegistry.API.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <param name="request"></param>
+        ///<param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdatePersonCommand request, CancellationToken cancellationToken = default)
@@ -62,6 +63,7 @@ namespace TBC.PersonRegistry.API.Controllers
         /// Deletes a person by ID
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task Delete([FromRoute] int id, CancellationToken cancellationToken = default)
@@ -95,6 +97,7 @@ namespace TBC.PersonRegistry.API.Controllers
         /// Creates a person relationship
         /// </summary>
         /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
 
         [HttpPut("relations")]
@@ -108,6 +111,7 @@ namespace TBC.PersonRegistry.API.Controllers
         ///Deletes a person relationship
         /// </summary>
         /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpDelete("relations")]
         public async Task RemoveRelation([FromBody] DeletePersonRelationCommand request, CancellationToken cancellationToken = default)
@@ -119,6 +123,7 @@ namespace TBC.PersonRegistry.API.Controllers
         /// Uploads or replaces person's profile picture
         /// </summary>
         /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
 
         [HttpPost("picture")]
@@ -135,7 +140,7 @@ namespace TBC.PersonRegistry.API.Controllers
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
 
-        [HttpGet("report")]
+        [HttpGet("relations")]
         public async Task<IEnumerable<GetRelatedPersonsReportDto>> GetPeopleRelations(CancellationToken cancellationToken = default)
            => await mediator.Send(new GetRelatedPersonsReportQuery(), cancellationToken).ConfigureAwait(false);
     }

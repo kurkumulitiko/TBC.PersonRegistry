@@ -17,7 +17,7 @@ public class GetPeopleQueryHandler : IRequestHandler<GetPeopleQuery, Pagination<
 
     public async Task<Pagination<GetPersonDTO>> Handle(GetPeopleQuery request, CancellationToken cancellationToken)
     {
-        var people = await _uow.PersonRepository.FilterAsync(request.PageIndex, request.PageSize, request.SearchQuery, request.PersonFilter, cancellationToken);
+        var people = await _uow.PersonRepository.FilterAsync(request.PageIndex, request.PageSize, request.SearchQuery, request.PersonFilter, cancellationToken).ConfigureAwait(false);
 
         return people.Adapt<Pagination<GetPersonDTO>>();
     }

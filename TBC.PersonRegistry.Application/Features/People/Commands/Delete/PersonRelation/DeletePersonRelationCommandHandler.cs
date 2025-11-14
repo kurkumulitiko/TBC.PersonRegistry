@@ -27,8 +27,8 @@ public class DeletePersonRelationCommandHandler : IRequestHandler<DeletePersonRe
 
         personRelation.DeletedAt = DateTime.Now;
 
-        await _uow.PersonRepository.DeleteRelation(personRelation);
-        await _uow.SaveAsync();
+        await _uow.PersonRepository.DeleteRelation(personRelation).ConfigureAwait(false);
+        await _uow.SaveAsync().ConfigureAwait(false);
 
     }
 }

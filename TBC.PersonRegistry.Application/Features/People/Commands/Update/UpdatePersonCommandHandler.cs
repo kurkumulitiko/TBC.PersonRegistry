@@ -16,7 +16,7 @@ public class UpdatePersonCommandHandler : IRequestHandler<UpdatePersonCommand>
 
     public async Task Handle(UpdatePersonCommand request, CancellationToken cancellationToken)
     {
-        var personfromDb = await _uow.PersonRepository.GetPersonByIdAsync(request.PersonId, cancellationToken);
+        var personfromDb = await _uow.PersonRepository.GetPersonByIdAsync(request.PersonId, cancellationToken).ConfigureAwait(false);
         if (personfromDb == null)
             throw new NotFoundException("პიროვნება ვერ მოიძებნა!");
 
@@ -45,7 +45,7 @@ public class UpdatePersonCommandHandler : IRequestHandler<UpdatePersonCommand>
         }
 
          _uow.PersonRepository.Update(personfromDb); 
-        await _uow.SaveAsync(cancellationToken);
+        await _uow.SaveAsync(cancellationToken).ConfigureAwait(false);
 
     }
 }

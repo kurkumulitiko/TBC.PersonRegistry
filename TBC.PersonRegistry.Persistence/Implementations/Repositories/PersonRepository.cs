@@ -20,9 +20,9 @@ public class PersonRepository : Repository<Person>, IPersonRepository
                .ThenInclude(x => x.RelatedPerson)
                .ThenInclude(x => x.Phones);
 
-    public async Task<Person> GetPersonByIdAsync(int id, CancellationToken cancellationToken = default)
+    public async Task<Person?> GetPersonByIdAsync(int id, CancellationToken cancellationToken = default)
     {
-        return await this.Including.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+        return await this.Including.FirstOrDefaultAsync(x => x.Id == id, cancellationToken).ConfigureAwait(false);
     }
     public Task AddRelatedPerson(PersonRelation personRelation)
     {
@@ -30,10 +30,10 @@ public class PersonRepository : Repository<Person>, IPersonRepository
         return Task.CompletedTask;
     }
 
-    public async Task<PersonRelation> GetRelationByPersonAndRelatedPersonIdAsync(int personId, int relatedPersonId, CancellationToken cancellationToken = default)
+    public async Task<PersonRelation?> GetRelationByPersonAndRelatedPersonIdAsync(int personId, int relatedPersonId, CancellationToken cancellationToken = default)
     {
 
-        return await context.PersonRelations.FirstOrDefaultAsync(x => (x.PersonId == personId && x.RelatedPersonId == relatedPersonId) || (x.PersonId == relatedPersonId && x.RelatedPersonId == personId && x.DeletedAt == null), cancellationToken);
+        return await context.PersonRelations.FirstOrDefaultAsync(x => (x.PersonId == personId && x.RelatedPersonId == relatedPersonId) || (x.PersonId == relatedPersonId && x.RelatedPersonId == personId && x.DeletedAt == null), cancellationToken).ConfigureAwait(false);
 
     }
 
@@ -43,13 +43,13 @@ public class PersonRepository : Repository<Person>, IPersonRepository
         return Task.CompletedTask;
     }
 
-    public async Task<Pagination<Person>> FilterAsync(int pageIndex, int pageSize, string searchQuery, PersonFilter? personFilter = null, CancellationToken cancellationToken = default)
+    public async Task<Pagination<Person>> FilterAsync(int pageIndex, int pageSize, string? searchQuery, PersonFilter? personFilter = null, CancellationToken cancellationToken = default)
     {
         return await this.Including
               .ApplyQuickSearch(searchQuery)
               .ApplyFilterParameters(personFilter)
              .OrderByDescending(x => x.CreatedAt)
-            .ToPaginatedAsync(pageIndex, pageSize, cancellationToken);
+            .ToPaginatedAsync(pageIndex, pageSize, cancellationToken).ConfigureAwait(false);
 
     }
 
@@ -69,7 +69,7 @@ public class PersonRepository : Repository<Person>, IPersonRepository
              PrivateNumber = gr.Key.PrivateNumber,
              RelationType = gr.Key.RelationType,
              RelatedPeopleAmount = gr.Count()
-         }).ToListAsync(cancellationToken);
+         }).ToListAsync(cancellationToken).ConfigureAwait(false);
 
     }
 

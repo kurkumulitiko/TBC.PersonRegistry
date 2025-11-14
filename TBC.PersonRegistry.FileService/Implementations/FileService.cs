@@ -20,7 +20,7 @@ public class FileService : IFileService
 
         var filePath = Path.Combine(address, fileName);
         using var stream = new FileStream(filePath, FileMode.Create, FileAccess.Write);
-        await fileStream.CopyToAsync(stream);
+        await fileStream.CopyToAsync(stream).ConfigureAwait(false);
         return filePath;
     }
 }

@@ -16,6 +16,6 @@ public class GetRelatedPersonsReportQueryHandler : IRequestHandler<GetRelatedPer
 
     public async Task<IEnumerable<GetRelatedPersonsReportDto>> Handle(GetRelatedPersonsReportQuery request, CancellationToken cancellationToken)
     {
-        return await _uow.PersonRepository.GetPersonRelationReport(cancellationToken);
+        return await _uow.PersonRepository.GetPersonRelationReport(cancellationToken).ConfigureAwait(false);
     }
 }
