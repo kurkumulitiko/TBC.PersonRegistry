@@ -17,7 +17,7 @@ public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity :
     }
     public async Task CreateAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
-        await context.AddAsync(entity, cancellationToken).ConfigureAwait(false);
+        await context.AddAsync(entity, cancellationToken);
     }
     public virtual void Update(TEntity entity)
     {
@@ -31,7 +31,7 @@ public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity :
     }
     public virtual async Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken = default)
     {
-        return await context.Set<TEntity>().ToListAsync().ConfigureAwait(false);
+        return await context.Set<TEntity>().ToListAsync();
     }
 
     public virtual async Task<TEntity?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
@@ -40,7 +40,7 @@ public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity :
     }
     public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> where, CancellationToken cancellationToken = default)
     {
-        return await context.Set<TEntity>().AnyAsync(where, cancellationToken).ConfigureAwait(false);
+        return await context.Set<TEntity>().AnyAsync(where, cancellationToken);
     }
 }
 
